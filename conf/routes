@@ -1,0 +1,60 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# https://www.playframework.com/documentation/latest/ScalaRouting
+# ~~~~
+
+
+# Map static resources from the /public folder to the /assets URL path
+### NoDocs ###
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
+### NoDocs ###
+GET     /docs/swagger-ui/*file      controllers.Assets.at(path:String="/public/lib/swagger-ui", file:String)
+
+### NoDocs ###
+GET     /swagger                    controllers.Default.redirect(to = "docs/swagger-ui/index.html?url=../../assets/swagger.json")
+
+
+### NoDocs ###
+GET     /metrics                   com.reginapeyfuss.services.metrics.PrometheusController.metrics
+
+
+###
+#  summary: Get all faculty
+#  tags:
+#    - Faculty
+#  responses:
+#    200:
+#      description: Faculty
+#      schema:
+#        type: array
+#        items:
+#          $ref: '#/definitions/com.reginapeyfuss.services.faculty.Faculty'
+#    404:
+#      description: No Faculty found
+#    500:
+#      description: Server Error; currently unable to provide data
+#    503:
+#      description: A required service is unavailable; currently unable to provide data
+###
+GET     /faculty                    com.reginapeyfuss.services.faculty.FacultyController.faculty
+
+###
+#  summary: Get all faculty type e.g. teachers, administrator, support staff
+#  tags:
+#    - Faculty
+#  responses:
+#    200:
+#      description: Faculty
+#      schema:
+#        type: array
+#        items:
+#          $ref: '#/definitions/com.reginapeyfuss.services.faculty.Faculty'
+#    404:
+#      description: No Faculty found
+#    500:
+#      description: Server Error; currently unable to provide data
+#    503:
+#      description: A required service is unavailable; currently unable to provide data
+###
+GET     /faculty/faculty-type/:typeName                    com.reginapeyfuss.services.faculty.FacultyController.facultyType(typeName: String)
